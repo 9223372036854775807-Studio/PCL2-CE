@@ -6,6 +6,7 @@ Imports System.Security.Principal
 Imports System.Text.RegularExpressions
 Imports System.Threading.Tasks
 Imports System.Windows.Markup
+Imports Microsoft.Identity.Client
 Imports Newtonsoft.Json
 
 Public Module ModBase
@@ -99,6 +100,10 @@ Public Module ModBase
     ''' AppData 中的 PCL 文件夹路径，以 \ 结尾。
     ''' </summary>
     Public PathAppdata As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\PCL\"
+    ''' <summary>
+    ''' MSAL 的 App
+    ''' </summary>
+    Public MSALApp As PublicClientApplication
 
 #End Region
 
