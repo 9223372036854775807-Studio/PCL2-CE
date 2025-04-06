@@ -1,4 +1,4 @@
-﻿Public Class ModSetup
+Public Class ModSetup
 
     ''' <summary>
     ''' 设置的更新号。
@@ -119,6 +119,7 @@
         {"LinkEula", New SetupEntry(False, Source:=SetupSource.Registry)},
         {"LinkName", New SetupEntry("", Source:=SetupSource.Registry)},
         {"LinkFirstTimeNetTest", New SetupEntry(True, Source:=SetupSource.Registry)},
+        {"ToolAccountLoginType", New SetupEntry(0, Source:=SetupSource.Registry)},
         {"ToolHelpChinese", New SetupEntry(True, Source:=SetupSource.Registry)},
         {"ToolDownloadThread", New SetupEntry(63, Source:=SetupSource.Registry)},
         {"ToolDownloadSpeed", New SetupEntry(42, Source:=SetupSource.Registry)},
