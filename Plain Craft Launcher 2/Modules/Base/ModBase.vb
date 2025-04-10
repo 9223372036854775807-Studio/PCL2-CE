@@ -103,7 +103,7 @@ Public Module ModBase
     ''' <summary>
     ''' MSAL 的 App
     ''' </summary>
-    Public MSALApp As PublicClientApplication
+    Public MsalApp As PublicClientApplication
 
 #End Region
 

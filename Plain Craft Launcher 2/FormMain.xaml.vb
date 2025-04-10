@@ -396,7 +396,7 @@ Public Class FormMain
         '剪贴板识别
         If Setup.Get("ToolDownloadClipboard") Then RunInNewThread(Sub() CompClipboard.ClipboardListening(), "Clipboard Listener", ThreadPriority.Lowest)
         'MSAL APP 初始化
-        MSALApp = PublicClientApplicationBuilder.Create(OAuthClientId) _
+        MsalApp = PublicClientApplicationBuilder.Create(OAuthClientId) _
             .WithDefaultRedirectUri() _
             .WithParentActivityOrWindow(Function() Handle) _
             .WithBroker(New BrokerOptions(BrokerOptions.OperatingSystems.Windows)) _
@@ -405,7 +405,7 @@ Public Class FormMain
         Dim storageProperties = New StorageCreationPropertiesBuilder("pclce_msal_cache.bin",
                                                                      Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\.pclce\").Build()
         Dim cacheHelper As MsalCacheHelper = MsalCacheHelper.CreateAsync(storageProperties).GetAwaiter().GetResult()
-        cacheHelper.RegisterCache(MSALApp.UserTokenCache)
+        cacheHelper.RegisterCache(MsalApp.UserTokenCache)
 
         Log("[Start] 第三阶段加载用时：" & GetTimeTick() - ApplicationStartTick & " ms")
     End Sub
