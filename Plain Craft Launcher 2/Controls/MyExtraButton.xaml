@@ -1,6 +1,7 @@
-﻿<Grid
+<Grid
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:local="clr-namespace:PCL"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" x:Name="PanBack" mc:Ignorable="d" x:Class="MyExtraButton"
             Width="40" RenderTransformOrigin="0.5,0.5" ToolTipService.Placement="Left" ToolTipService.VerticalOffset="16" ToolTipService.HorizontalOffset="-8" Height="0">
     <Grid.RenderTransform>
@@ -16,6 +17,11 @@
                 <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.2" />
             </Border.Effect>
         </Border>
+        <local:MyImage x:Name="PanImage" Stretch="UniformToFill">
+            <local:MyImage.Clip>
+                <EllipseGeometry Center="20,20" RadiusX="20" RadiusY="20"/>
+            </local:MyImage.Clip>
+        </local:MyImage>
         <Border x:Name="PanProgress" CornerRadius="1000" BorderThickness="0.001" Background="#2FFFFFFF" ClipToBounds="True" Visibility="Collapsed">
             <Border.Clip>
                 <RectangleGeometry x:Name="RectProgress" Rect="0,5,40,35" />

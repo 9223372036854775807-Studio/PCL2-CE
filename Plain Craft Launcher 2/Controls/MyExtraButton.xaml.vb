@@ -1,4 +1,4 @@
-﻿Public Class MyExtraButton
+Public Class MyExtraButton
 
     '声明
     Public Event Click(sender As Object, e As MouseButtonEventArgs) '自定义事件
@@ -43,6 +43,16 @@
         Set(value As Double)
             _LogoScale = value
             If Not IsNothing(Path) Then Path.RenderTransform = New ScaleTransform With {.ScaleX = LogoScale, .ScaleY = LogoScale}
+        End Set
+    End Property
+    Private Property _Image As String = ""
+    Public Property Image As String
+        Get
+            Return _Image
+        End Get
+        Set(value As String)
+            _Image = Image
+            PanImage.Source = value
         End Set
     End Property
     Private _Show As Boolean = False

@@ -1,3 +1,4 @@
+Imports System.Threading.Tasks
 Imports Windows.Media
 Imports Windows.Storage
 Imports Windows.Storage.Streams
@@ -67,7 +68,27 @@ Public Module ModMusic
     ''' <summary>
     ''' 刷新背景音乐按钮 UI 与设置页 UI。
     ''' </summary>
-    Private Sub MusicRefreshUI()
+    Private Async Sub MusicRefreshUI()
+        Dim Thunbnail
+        Dim Md5 As String = ""
+        Dim TempPath As String = ""
+        If MusicCurrentInfo IsNot Nothing Then
+            Thunbnail = MusicCurrentInfo.Tag.Pictures.FirstOrDefault()
+            If Not Directory.Exists(PathTemp & "Cache\Music\") Then
+                Directory.CreateDirectory(PathTemp + "Cache\Music\")
+            End If
+            If Thunbnail IsNot Nothing Then
+                Await Task.Run(
+            Sub()
+                Md5 = GetFileMD5(MusicCurrent)
+                TempPath = PathTemp & "Cache\Music\" & Md5
+                If Not File.Exists(TempPath) AndAlso Not String.IsNullOrEmpty(Md5) Then
+                    File.WriteAllBytes(TempPath, Thunbnail.Data.Data)
+                End If
+            End Sub)
+            End If
+        End If
+
         RunInUi(
         Sub()
             Try
@@ -100,6 +121,12 @@ Public Module ModMusic
                     End If
                     FrmMain.BtnExtraMusic.ToolTip = ToolTipText
                     ToolTipService.SetVerticalOffset(FrmMain.BtnExtraMusic, If(ToolTipText.Contains(vbLf), 10, 16))
+
+                    If Thunbnail IsNot Nothing Then
+                        FrmMain.BtnExtraMusic.Image = TempPath
+                    Else
+                        FrmMain.BtnExtraMusic.Image = ""
+                    End If
                 End If
                 If FrmSetupUI IsNot Nothing Then FrmSetupUI.MusicRefreshUI()
 
@@ -216,6 +243,10 @@ Public Module ModMusic
         If _smtc Is Nothing OrElse Not _smtc.IsEnabled Then EnableSMTCSupport()
         Log("[Music] 播放开始：" & Address)
         MusicCurrent = Address
+        Try
+            MusicCurrentInfo = TagLib.File.Create(MusicCurrent)
+        Catch
+        End Try
         UpdateSMTCInfo()
         RunInNewThread(Sub() MusicLoop(IsFirstLoad), "Music", ThreadPriority.BelowNormal)
     End Sub
@@ -314,17 +345,15 @@ Public Module ModMusic
         Log($"[SMTC] 更新 SMTC 媒体信息，文件路径: {MusicCurrent}")
         Dim Updater = _smtc.DisplayUpdater
 
-        Try
-            Dim File = TagLib.File.Create(MusicCurrent)
+        Updater.AppMediaId = "Plain Craft Launcher 2 CE" '媒体来源信息
+        Updater.Type = MediaPlaybackType.Music '指定媒体类型
 
-            Updater.AppMediaId = "Plain Craft Launcher 2 CE" '媒体来源信息
-            Updater.Type = MediaPlaybackType.Music '指定媒体类型
-
-            Dim Artist As String = File.Tag.FirstPerformer
-            Dim AlbumArtist As String = File.Tag.FirstAlbumArtist
-            Dim AlbumTitle As String = File.Tag.Album
-            Dim Title As String = File.Tag.Title
-            Dim Thumbnail = File.Tag.Pictures.FirstOrDefault()
+        If MusicCurrentInfo IsNot Nothing Then
+            Dim Artist As String = MusicCurrentInfo.Tag.FirstPerformer
+            Dim AlbumArtist As String = MusicCurrentInfo.Tag.FirstAlbumArtist
+            Dim AlbumTitle As String = MusicCurrentInfo.Tag.Album
+            Dim Title As String = MusicCurrentInfo.Tag.Title
+            Dim Thumbnail = MusicCurrentInfo.Tag.Pictures.FirstOrDefault()
 
             If String.IsNullOrEmpty(Artist) Then
                 Artist = ""
@@ -357,8 +386,7 @@ Public Module ModMusic
             Else
                 Updater.Thumbnail = Nothing
             End If
-        Catch
-        End Try
+        End If
 
         '生效设置
         Updater.Update()
@@ -446,6 +474,10 @@ Public Module ModMusic
     ''' 当前播放的音乐地址。
     ''' </summary>
     Private MusicCurrent As String = ""
+    ''' <summary>
+    ''' 当前音乐文件的信息。未初始化时为 Nothing。
+    ''' </summary>
+    Private MusicCurrentInfo As TagLib.File = Nothing
     ''' <summary>
     ''' 在 MusicUuid 不变的前提下，持续播放某地址的音乐，且在播放结束后随机播放下一曲。
     ''' </summary>
