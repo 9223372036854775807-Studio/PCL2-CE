@@ -122,11 +122,7 @@ Public Module ModMusic
                     FrmMain.BtnExtraMusic.ToolTip = ToolTipText
                     ToolTipService.SetVerticalOffset(FrmMain.BtnExtraMusic, If(ToolTipText.Contains(vbLf), 10, 16))
 
-                    If Thunbnail IsNot Nothing Then
-                        FrmMain.BtnExtraMusic.Image = TempPath
-                    Else
-                        FrmMain.BtnExtraMusic.Image = ""
-                    End If
+                    FrmMain.BtnExtraMusic.Image = If(Thumbnail IsNot Nothing, TempPath, "")
                 End If
                 If FrmSetupUI IsNot Nothing Then FrmSetupUI.MusicRefreshUI()
 
