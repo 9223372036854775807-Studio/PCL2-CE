@@ -69,21 +69,21 @@ Public Module ModMusic
     ''' 刷新背景音乐按钮 UI 与设置页 UI。
     ''' </summary>
     Private Async Sub MusicRefreshUI()
-        Dim Thunbnail
+        Dim Thumbnail
         Dim Md5 As String = ""
         Dim TempPath As String = ""
         If MusicCurrentInfo IsNot Nothing Then
-            Thunbnail = MusicCurrentInfo.Tag.Pictures.FirstOrDefault()
+            Thumbnail = MusicCurrentInfo.Tag.Pictures.FirstOrDefault()
             If Not Directory.Exists(PathTemp & "Cache\Music\") Then
                 Directory.CreateDirectory(PathTemp + "Cache\Music\")
             End If
-            If Thunbnail IsNot Nothing Then
+            If Thumbnail IsNot Nothing Then
                 Await Task.Run(
             Sub()
                 Md5 = GetFileMD5(MusicCurrent)
                 TempPath = PathTemp & "Cache\Music\" & Md5
                 If Not File.Exists(TempPath) AndAlso Not String.IsNullOrEmpty(Md5) Then
-                    File.WriteAllBytes(TempPath, Thunbnail.Data.Data)
+                    File.WriteAllBytes(TempPath, Thumbnail.Data.Data)
                 End If
             End Sub)
             End If
