@@ -129,7 +129,7 @@ WaitRetry:
                 MyMsgBox("PCL 和新版 Minecraft 均不再支持 32 位系统，部分功能将无法使用。" & vbCrLf & "非常建议重装为 64 位系统后再进行游戏！", "环境警告", "我知道了", IsWarn:=True)
             End If
             Setup.Load("SystemQualcommHint")
-            If Setup.Get("SystemQualcommHint") AndAlso IsArm64System Then
+            If Not Setup.Get("SystemQualcommHint") AndAlso IsArm64System Then
                 Dim CpuVendor As String = Registry.GetValue("HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\SYSTEM\CentralProcessor\0", "GenuineIntel", "")
                 If CpuVendor = "Qualcomm Technologies Inc" Then
                     '检查是否安装 OpenGl 兼容包
@@ -138,7 +138,7 @@ WaitRetry:
                     If Not Packages.Any(Function(pkg) pkg.Id.FamilyName = "Microsoft.D3DMappingLayers_8wekyb3d8bbwe") Then
                         MyMsgBox("PCL-CE 识别到当前电脑的 CPU 制造商为高通。你可能需要安装 OpenGL 兼容包才能够正常启动 Minecraft。" & vbCrLf & "建议安装 OpenGL 兼容包！", "环境警告", "前往安装", "不再提示", "我知道了", IsWarn:=True, , ,
                                  Sub() Process.Start("z"),
-                                 Sub() Setup.Set("SystemQualcommHint", False))
+                                 Sub() Setup.Set("SystemQualcommHint", True))
                     End If
                 End If
             End If
