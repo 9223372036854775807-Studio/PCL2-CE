@@ -1,4 +1,4 @@
-﻿Imports System.ComponentModel
+Imports System.ComponentModel
 Imports System.Runtime.InteropServices
 Imports System.Windows.Interop
 
@@ -731,6 +731,10 @@ Public Class FormMain
             Else
                 FrmLaunchLeft.LaunchButtonClick()
             End If
+        End If
+        '调用全局搜索
+        If Keyboard.Modifiers = ModifierKeys.Control AndAlso (e.Key = Key.F Or e.Key = Key.S) Then
+            SearchInit()
         End If
         '修复按下 Alt 后误认为弹出系统菜单导致的冻结
         If e.SystemKey = Key.LeftAlt OrElse e.SystemKey = Key.RightAlt Then e.Handled = True
@@ -1604,6 +1608,11 @@ Public Class FormMain
 
     '愚人节鼠标位置
     Public lastMouseArg As MouseEventArgs = Nothing
+
+    Private Sub PanSearch_MouseLeftButtonUp(sender As Object, e As MouseButtonEventArgs) Handles PanSearch.MouseLeftButtonUp
+        SearchClose()
+    End Sub
+
     Private Sub FormMain_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
         lastMouseArg = e
     End Sub
