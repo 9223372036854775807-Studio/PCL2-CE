@@ -191,7 +191,7 @@
                     <local:MyExtraButton x:Name="BtnExtraMusic" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Collapsed" CanRightClick="True" />
                 </StackPanel>
                 <Grid x:Name="PanSearch" Grid.RowSpan="2" Background="#00000000" Visibility="Collapsed">
-                    <StackPanel x:Name="PanSearchMain" Margin="25,25,25,10" Grid.IsSharedSizeScope="True">
+                    <StackPanel x:Name="PanSearchMain" Margin="25,25,25,10" Grid.IsSharedSizeScope="True" RenderTransformOrigin="0.5,0">
                         <StackPanel.RenderTransform>
                             <TransformGroup>
                                 <TranslateTransform x:Name="PanSearchMainTransformPos" X="0" Y="0" />
@@ -200,10 +200,9 @@
                             </TransformGroup>
                         </StackPanel.RenderTransform>
                         <local:MySearchBox Margin="0,0,0,15" HintText="Sherlock 搜索" x:Name="SearchBox" />
-                        <Grid>
-                            <local:MyCard x:Name="PanSearchResult" Visibility="Collapsed" VerticalAlignment="Top" Opacity="0" Margin="0,0,0,15" Title=" " MinHeight="40">
-                                <StackPanel Margin="20,40,18,18" Name="PanSearchList" VerticalAlignment="Top" />
-                            </local:MyCard>
+                        <local:MyCard x:Name="PanSearchResult" Visibility="Collapsed" VerticalAlignment="Top" Opacity="0" Margin="0,0,0,15" Title=" " MinHeight="40">
+                            <StackPanel Margin="20,40,18,18" Name="PanSearchList" VerticalAlignment="Top" />
+                        </local:MyCard>
                             <StackPanel Name="PanList" />
                         </Grid>
                     </StackPanel>

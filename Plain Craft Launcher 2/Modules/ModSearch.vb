@@ -10,7 +10,8 @@ Public Module ModSearch
         FrmMain.PanSearch.Visibility = Visibility.Visible
         FrmMain.PanSearchMain.Opacity = 0
 
-        FrmMain.PanSearchMainTransformScale.ScaleX = 0.93
+        FrmMain.PanSearchMainTransformScale.ScaleX = 0.88
+        FrmMain.PanSearchMainTransformScale.ScaleY = 0.88
         FrmMain.PanSearchMainTransformPos.Y = 20
         FrmMain.PanSearchMainTransformRotate.Angle = 0.6
 
@@ -37,7 +38,7 @@ Public Module ModSearch
             Sub(i)
                 FrmMain.PanSearchMainTransformScale.ScaleX += i
                 FrmMain.PanSearchMainTransformScale.ScaleY += i
-            End Sub, 0.93 - FrmMain.PanSearchMainTransformScale.ScaleX, 180),
+            End Sub, 0.88 - FrmMain.PanSearchMainTransformScale.ScaleX, 180),
             AaDouble(Sub(i) FrmMain.PanSearchMainTransformPos.Y += i, 20 - FrmMain.PanSearchMainTransformPos.Y, 180, 0, New AniEaseOutFluent(AniEasePower.Weak)),
             AaDouble(Sub(i) FrmMain.PanSearchMainTransformRotate.Angle += i, 0.6 - FrmMain.PanSearchMainTransformRotate.Angle, 180, 0, New AniEaseInoutFluent(AniEasePower.Weak)),
             AaCode(Sub() FrmMain.PanSearch.Visibility = Visibility.Collapsed, , True)
